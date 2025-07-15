@@ -2,9 +2,13 @@ name: pipeline
 
 on:
   push:
-    branches: [test_branch]
+    branches:
+      - test_branch
+    tags:
+      - 'v*'  
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   test:
@@ -15,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Unit Tests
-        run: GOOS=linux GOARCH=amd64 go test 
+        run: GOOS=linux GOARCH=amd64 go test ./...
 
       - name: Vet
         run: go vet ./...
